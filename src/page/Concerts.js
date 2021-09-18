@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { LittleSquare, Loading } from '../component/MySvg'
-import { getCultureData } from '../others/culturedata'
+// import { getCultureData } from '../others/culturedata'
 import { Card } from 'react-bootstrap'
 import RecommendConcert from '../component/RecommendConcert'
 import { concertRef } from '../firebase/myfirebase'
@@ -75,11 +75,11 @@ export function ConcertCardsContainer({ myCultureData, loading }) {
         <div className="ConcertCardsContainer">
           {myCultureData.map((e, index) => {
             return (
-              <Card key={index}>
+              <Card key={index} className="mb-5">
                 <div className="img-container-bg" >
                 </div>
                 <div className="img-container" style={{ backgroundImage: 'url(' + e.image + ')' }}>
-                  <img src={e.image} alt={e.name} style={{ zIndex: '10' }} />
+                  <img src={e.image} alt={e.name} style={{ zIndex: '8' }} />
                 </div>
                 <Card.Body>
                   <div>

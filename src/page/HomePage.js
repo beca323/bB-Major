@@ -83,6 +83,7 @@ export default function HomePage() {
       }
     })
     setTags([...tempTags])
+
   }
 
   const getSongsData = () => {
@@ -112,6 +113,7 @@ export default function HomePage() {
   }
 
   const handleRecommendBtn = () => {
+    // if (true) { return }
     if (sessionStorage.getItem('user-nickname') == null) {
       alert('請先登入')
       return
