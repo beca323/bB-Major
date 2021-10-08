@@ -63,6 +63,9 @@ export default function PlatformConcertVerify() {
       <Link to="#">
         <input className="r-btn-blue" type="submit" style={{ width: 'fit-content' }} value="音樂會宣傳審核" />
       </Link>
+      <Link to="/platform-control">
+        <input className="r-btn-second" type="submit" style={{ width: 'fit-content' }} value="主控台" />
+      </Link>
       <ConcertsCardContainer allConcerts={allConcerts} />
     </div>
   )

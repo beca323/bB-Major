@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, InputGroup, Button } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import RecentlyAdd from '../component/RecentlyAdd'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { songRef } from '../firebase/myfirebase'
 import Recommend from './Recommend'
 import HomePageTitleandSearch from '../component/HomePageTitleandSearch'
+import { useControl } from '../contexts/ControlContext'
 
 export default function HomePage() {
   const [searchNull, setSearchNull] = useState(false)
@@ -22,31 +23,13 @@ export default function HomePage() {
   ])
 
   const mounted = useRef(false)
-
+  const { firebaseOpen } = useControl()
   const handleSearch = (e) => {
     e.preventDefault()
     if (disableSearch == true || searchInput.replaceAll(' ', '') == '') return
+
+    if (!firebaseOpen) return // 檢查 firebase 是否允許存取
     searchFn(searchInput.toUpperCase())
-    // setDisableSearch(true)
-    // setShowSearchResult(true)
-    // setCardStatesSearchResult([])
-    // setSearchNull(false)
-    // let tempCardStatesSearchResult = []
-    // songRef.where("status", "==", "通過").orderBy("title", "asc").get()
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       const firebaseSongTitle = doc.data().title.toUpperCase()
-    //       if (firebaseSongTitle.includes(searchInput.toUpperCase())) {
-    //         tempCardStatesSearchResult = [...tempCardStatesSearchResult, doc.data()]
-    //       }
-    //     })
-    //     setCardStatesSearchResult(tempCardStatesSearchResult)
-    //     setDisableSearch(false)
-    //   }).then(() => {
-    //     if (tempCardStatesSearchResult.length === 0) {
-    //       setSearchNull(true)
-    //     }
-    //   })
   }
   const searchFn = (searchInput) => {
     setDisableSearch(true)
@@ -83,7 +66,6 @@ export default function HomePage() {
       }
     })
     setTags([...tempTags])
-
   }
 
   const getSongsData = () => {
@@ -113,7 +95,6 @@ export default function HomePage() {
   }
 
   const handleRecommendBtn = () => {
-    // if (true) { return }
     if (sessionStorage.getItem('user-nickname') == null) {
       alert('請先登入')
       return
@@ -135,6 +116,13 @@ export default function HomePage() {
       mounted.current = false
     }
   }, [])
+
+  // const { firebaseOpen, closeFirebase } = useControl()
+  // useEffect(() => {
+  //   console.log(firebaseOpen.toString())
+  //   closeFirebase()
+  // }, [firebaseOpen])
+
   return (
     <div className="HomePage">
       {showRecommend ? <Recommend setShowRecommend={setShowRecommend} /> : ''}
