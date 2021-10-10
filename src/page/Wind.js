@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { songRef } from '../firebase/myfirebase'
+import { songRef, commentRef } from '../firebase/myfirebase'
 import { Card, Row, Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { Loading } from '../component/MySvg'
@@ -57,6 +57,15 @@ export default function Wind() {
       .catch((error) => {
         console.error("Error writing document: ", error)
       })
+
+    const newComment = {
+      title: songData.title,
+      comment: commentText,
+      timestamp: new Date,
+      username: currentUser.email,
+      nickname: sessionStorage.getItem('user-nickname')
+    }
+    commentRef.doc().set(newComment)
   }
   const getComments = (docID) => {
     let tempComment = []

@@ -331,6 +331,16 @@ iframe,
   }
 }
 
+.notification {
+  position: absolute;
+  top: 56px;
+  right: 0px;
+  height: 400px;
+  width: 300px;
+  box-shadow: 0 0 30px #bbb;
+  background-color: white;
+}
+
 @keyframes gogoround {
   from {
     -webkit-transform: rotate(0deg);
