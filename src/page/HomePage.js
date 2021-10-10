@@ -7,18 +7,20 @@ import Recommend from './Recommend'
 import HomePageTitleandSearch from '../component/HomePageTitleandSearch'
 import { useControl } from '../contexts/ControlContext'
 
+let myTimeout
+
 export default function HomePage() {
   const [searchNull, setSearchNull] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [cardStatesRecent, setCardStatesRecent] = useState([])
-  const [cardStatesPopular, setCardStatesPopular] = useState([])
+  // const [cardStatesPopular, setCardStatesPopular] = useState([])
   const [cardStatesSearchResult, setCardStatesSearchResult] = useState([])
   const [showSearchResult, setShowSearchResult] = useState(false)
   const [disableSearch, setDisableSearch] = useState(false)
   const [showRecommend, setShowRecommend] = useState()
   const [tags, setTags] = useState([
-    { tag: '動漫配樂', select: false },
-    { tag: '協奏曲', select: false },
+    { tag: '動畫配樂', select: false },
+    { tag: '電影配樂', select: false },
     { tag: '管弦改編', select: false }
   ])
 
@@ -36,9 +38,30 @@ export default function HomePage() {
     setShowSearchResult(true)
     setCardStatesSearchResult([])
     setSearchNull(false)
-    console.log(searchInput)
     let tempCardStatesSearchResult = []
     songRef.where("status", "==", "通過").orderBy("title", "asc").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const firebaseSongTitle = doc.data().title.toUpperCase()
+          if (firebaseSongTitle.includes(searchInput)) {
+            tempCardStatesSearchResult = [...tempCardStatesSearchResult, doc.data()]
+          }
+        })
+        setCardStatesSearchResult(tempCardStatesSearchResult)
+        setDisableSearch(false)
+      }).then(() => {
+        if (tempCardStatesSearchResult.length === 0) {
+          setSearchNull(true)
+        }
+      })
+  }
+  const searchFnByTags = (tags) => {
+    setDisableSearch(true)
+    setShowSearchResult(true)
+    setCardStatesSearchResult([])
+    setSearchNull(false)
+    let tempCardStatesSearchResult = []
+    songRef.where("tags", "array-contains-any", tags).orderBy("title", "asc").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           const firebaseSongTitle = doc.data().title.toUpperCase()
@@ -66,6 +89,8 @@ export default function HomePage() {
       }
     })
     setTags([...tempTags])
+    stop()
+    start([...tempTags])
   }
 
   const getSongsData = () => {
@@ -117,11 +142,20 @@ export default function HomePage() {
     }
   }, [])
 
-  // const { firebaseOpen, closeFirebase } = useControl()
-  // useEffect(() => {
-  //   console.log(firebaseOpen.toString())
-  //   closeFirebase()
-  // }, [firebaseOpen])
+
+  function start(tags) {
+    myTimeout = setTimeout(() => {
+      const selectedTag = tags.filter((tag) => {
+        return tag.select === true
+      }).map((tag) => {
+        return tag.tag
+      })
+      searchFnByTags(selectedTag)
+    }, 2000)
+  }
+  function stop() {
+    clearTimeout(myTimeout)
+  }
 
   return (
     <div className="HomePage">
