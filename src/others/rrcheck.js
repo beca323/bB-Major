@@ -12,3 +12,12 @@ export function closeFirebase() {
     return true
   }
 }
+
+export function notnulls(array) {
+  for (let k = 0; k < array.length; k++) {
+    if (!notnull(array[k])) {
+      return false
+    }
+    return true
+  }
+}

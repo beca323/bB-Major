@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { storageRef, concertRef } from '../firebase/myfirebase'
+import { notnulls } from '../others/rrcheck'
 
 export default function RecommendConcert() {
   const [concertDate, setConcertDate] = useState('')
@@ -8,24 +10,54 @@ export default function RecommendConcert() {
   const [concertBand, setConcertBand] = useState('')
   const [concertWebsite, setConcertWebsite] = useState('')
   const [concertTicket, setConcertTicket] = useState('')
-  const [concertBanner, setconcertBanner] = useState('')
+  const [concertBanner, setConcertBanner] = useState('')
   const [concertPrice, setConcertPrice] = useState('')
-
-
+  const [concertAddress, setConcertAddress] = useState('')
+  const [concertPlace, setConcertPlace] = useState('')
 
   const handleSend = () => {
     document.getElementsByClassName('RecommendConcert')[0].style.zIndex = '9'
-    const concertData = {
-      title: concertTitle,
-      date: concertDate,
-      time: concertTime,
-      band: concertBand,
-      website: concertWebsite,
-      ticket: concertTicket,
-      banner: concertBanner,
-      price: concertPrice
-    }
-    console.log(concertData)
+
+    const uploadTask = storageRef.child(concertTitle).put(concertBanner)
+
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log('Upload is ' + progress + '% done')
+      },
+      (error) => {
+        console.log(error)
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File available at', downloadURL)
+          setConcertBanner(downloadURL)
+          return downloadURL
+        }).then((downloadURL) => {
+          const concertData = {
+            address: concertAddress,
+            date: concertDate,
+            eventlink: concertWebsite,
+            image: downloadURL,
+            name: concertBand,
+            place: concertPlace,
+            price: concertPrice,
+            status: '待審核',
+            ticketlink: concertTicket,
+            time: concertTime,
+            title: concertTitle
+          }
+          if (!notnulls([concertAddress, concertDate, concertWebsite, concertBanner, concertBand, concertPlace, concertPrice, concertTicket, concertTime, concertTitle])) { return }
+          concertRef.doc().set(concertData)
+            .then(() => {
+              console.log("Document successfully written!")
+            })
+            .catch((error) => {
+              console.error("Error writing document: ", error)
+            })
+        })
+      }
+    )
   }
   const handleClickAdd = (e) => {
     e.stopPropagation()
@@ -54,6 +86,7 @@ export default function RecommendConcert() {
     const reader = new FileReader()
     reader.onload = (e => img.src = e.target.result)
     reader.readAsDataURL(file)
+    setConcertBanner(file)
   }
   return (
     <div className="RecommendConcert" >
@@ -70,13 +103,19 @@ export default function RecommendConcert() {
             <div className="mt-5 fw-bold"> 時間：</div>
             <input onChange={e => { setConcertTime(e.target.value) }} type="time" className="w-100" placeholder="https://youtu.be/..." />
 
+            <div className="mt-5 fw-bold"> 演出地點：</div>
+            <input onChange={e => { setConcertPlace(e.target.value) }} type="text" className="w-100" placeholder="" />
+
+            <div className="mt-5 fw-bold"> 演出地址：</div>
+            <input onChange={e => { setConcertAddress(e.target.value) }} type="text" className="w-100" placeholder="" />
+
             <div className="mt-5 fw-bold"> 演出單位/演出者：</div>
             <input onChange={e => { setConcertBand(e.target.value) }} type="text" className="w-100" placeholder="" />
-
-            <div className="mt-5 fw-bold"> 官方宣傳網站：</div>
-            <input onChange={e => { setConcertWebsite(e.target.value) }} type="text" className="w-100" placeholder="" />
           </Col>
           <Col>
+            <div className="mt-5 fw-bold"> 官方宣傳網站：</div>
+            <input onChange={e => { setConcertWebsite(e.target.value) }} type="text" className="w-100" placeholder="" />
+
             <div className="mt-5 fw-bold"> 票價：</div>
             <input onChange={e => { setConcertPrice(e.target.value) }} type="text" className="w-100" placeholder="" />
 

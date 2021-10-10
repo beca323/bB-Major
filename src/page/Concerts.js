@@ -79,7 +79,7 @@ export function ConcertCardsContainer({ myCultureData, loading }) {
                 <div className="img-container-bg" >
                 </div>
                 <div className="img-container" style={{ backgroundImage: 'url(' + e.image + ')' }}>
-                  <img src={e.image} alt={e.name} style={{ zIndex: '10' }} />
+                  <img src={e.image} alt={e.name} style={{ zIndex: '8' }} />
                 </div>
                 <Card.Body>
                   <div>
@@ -88,7 +88,7 @@ export function ConcertCardsContainer({ myCultureData, loading }) {
                     <a target="_blank" href={'https://www.google.com/maps/search/?api=1&query=' + e.address}>
                       <button className="r-btn-second">
                         <i className="fas fa-map-marker-alt" style={{ color: '#2270a9' }}></i> 地圖
-                  </button>
+                      </button>
                     </a>
                   </div>
                   <a href={e.eventlink} style={{ color: '#555' }} target="_blank" className="fw-bold fs-4 my-2">{e.title}</a>

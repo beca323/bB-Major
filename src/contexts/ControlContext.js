@@ -31,7 +31,7 @@ export function ControlProvider({ children }) {
   const getControlStatus = () => {
     controlRef.doc('control').get()
       .then((doc) => {
-        console.log(doc.data().all)
+        // console.log(doc.data().all)
         setFirebaseOpen(doc.data().all)
       }).catch((error) => {
         console.log("Error getting document:", error)
