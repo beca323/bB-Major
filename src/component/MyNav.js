@@ -22,11 +22,9 @@ export default function MyNav() {
   const storeUserInfo = () => {
     userRef.doc(currentUser.email).get()
       .then((doc) => {
-        // console.log(doc.data().nickname)
         sessionStorage.setItem('user-nickname', doc.data().nickname)
       })
       .catch((e) => {
-        // console.log('error', e)
         sessionStorage.setItem('user-nickname', currentUser.email.split('@')[0])
       })
       .then(() => {
@@ -64,7 +62,6 @@ export default function MyNav() {
               <div className="d-flex"><i onClick={toggleNoti} className="far fa-bell" style={{ cursor: 'pointer', color: 'white', margin: 'auto 1rem' }}></i><Nav.Link href="/platform">後台</Nav.Link></div> : ''
             }
             {noti ? <Notification /> : ''}
-            {/* <Nav.Link href="/userpage">{currentUser && currentUser.email.split('@')[0]}</Nav.Link> */}
             <Nav.Link href="/userpage">{currentUser && username}</Nav.Link>
             <Nav.Link onClick={handleLoginOut}>{loginOut}</Nav.Link>
           </Nav>

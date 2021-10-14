@@ -46,7 +46,7 @@ export default function Login() {
               <Form.Label>密碼</Form.Label>
               <Form.Control type="password" ref={passwordRef} required></Form.Control>
             </Form.Group>
-            <Button disabled={loading} className="w-100 btn-secondary" type="submit">登入</Button>
+            <Button disabled={loading} className="w-100 btn-secondary mt-2" type="submit">登入</Button>
           </Form>
           {/* <div className="w-100 text-center mt-3" style={{ color: '#3e3e3e' }}><Link to="forgot-password">忘記密碼？</Link></div> */}
         </Card.Body>

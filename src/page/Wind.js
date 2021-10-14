@@ -157,7 +157,7 @@ export function CommentArea({ currentUser, handleSendComment, commentText, setCo
           </div>
           <div>
             <div style={{ opacity: '0' }}>a</div>
-            <input type="submit" value="留言" disabled={sendBtnDisable} />
+            <input style={{ width: 'auto' }} type="submit" value="留言" disabled={sendBtnDisable} />
           </div>
         </form>
         : <div className="h-100 d-flex align-items-center">留言請先登入</div>

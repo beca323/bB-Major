@@ -56,7 +56,7 @@ export default function Signup() {
               <Form.Label>確認密碼</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required></Form.Control>
             </Form.Group>
-            <Button disabled={loading} className="w-100 btn-secondary" type="submit">Sign up</Button>
+            <Button disabled={loading} className="w-100 btn-secondary mt-2" type="submit">Sign up</Button>
           </Form>
         </Card.Body>
         <div className="w-100 text-center mt-2" style={{ color: '#3e3e3e' }}>已有帳號？點此 <Link to="login"> 登入！</Link></div>

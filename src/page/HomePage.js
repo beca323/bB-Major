@@ -71,7 +71,11 @@ export default function HomePage() {
         })
         setCardStatesSearchResult(tempCardStatesSearchResult)
         setDisableSearch(false)
-      }).then(() => {
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .then(() => {
         if (tempCardStatesSearchResult.length === 0) {
           setSearchNull(true)
         }
@@ -151,7 +155,7 @@ export default function HomePage() {
         return tag.tag
       })
       searchFnByTags(selectedTag)
-    }, 2000)
+    }, 1600)
   }
   function stop() {
     clearTimeout(myTimeout)
