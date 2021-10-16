@@ -12,6 +12,8 @@
 
 ![](https://i.imgur.com/v9giY2A.png)
 
+![](https://i.imgur.com/BAvCcsy.png)
+
 ## 網站特色
 
 ・登入系統 - 使用者登入系統，支援 email / password 註冊
