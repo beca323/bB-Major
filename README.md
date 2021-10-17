@@ -1,5 +1,16 @@
 # bB Major
 
+## Demo : (Hosting on Firebase)
+
+https://bbbe-5e359.web.app/
+
+訪客測試
+
+帳號：test@gmail.com
+
+密碼：test123
+
+
 ## 網站介紹
 
 ### 音樂人的小型社交網站，包含三大部分：
@@ -31,3 +42,15 @@
 ・版面美化 - 包含 RWD 設計
 
 ![](https://i.imgur.com/gRDaqRV.gif)
+
+## 開發技術
+
+・HTML / CSS / JavaScript
+
+・React
+
+・Webpack
+
+・Bootstrap
+
+・Firebase (Hosting / Firestore / Storage)
