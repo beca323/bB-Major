@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Navbar, Container, Nav, Card } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
-import { useHistory, Link } from 'react-router-dom'
-import { userRef, songRef, commentRef } from '../firebase/myfirebase'
+import { useHistory, Link, useLocation } from 'react-router-dom'
+import { userRef, commentRef } from '../firebase/myfirebase'
 import useToggle from '../customHooks/useToggle'
+import { useControl } from '../contexts/ControlContext'
 
 const manager = ['lrlrlrpercussion@gmail.com', 'whwang104@gmail.com', 'okwap000093@gmail.com', 's110415009@stu.ntue.edu.tw']
 export default function MyNav() {
@@ -38,6 +39,17 @@ export default function MyNav() {
       setUsername(currentUser.email.split('@')[0])
     }
   }
+
+  const location = useLocation()
+  const { closeWebsiteRef } = useControl()
+
+  useEffect(() => {
+    if (location.pathname === '/uh-oh') return
+    // console.log(closeWebsiteRef.current)
+    if (closeWebsiteRef.current === true) {
+      history.push('/uh-oh')
+    }
+  }, [closeWebsiteRef.current, location.pathname])
 
   useEffect(() => {
     if (!currentUser) {

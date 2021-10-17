@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState, useEffect, useRef } from "react"
 import { controlRef } from "../firebase/myfirebase"
 
 const ControlContext = React.createContext()
@@ -21,12 +21,7 @@ export function ControlProvider({ children }) {
     setFirebaseOpen(!firebaseOpen)
   }
 
-  const value = {
-    firebaseOpen,
-    openFirebase,
-    closeFirebase,
-    toggleFirebase
-  }
+
 
   const getControlStatus = () => {
     controlRef.doc('control').get()
@@ -38,9 +33,26 @@ export function ControlProvider({ children }) {
       })
   }
 
+  const closeWebsiteRef = useRef(false)
+  const closeWebsite = () => {
+    controlRef.doc('control').onSnapshot(doc => {
+      closeWebsiteRef.current = doc.data().closeWebsite
+      // console.log(closeWebsiteRef.current)
+    })
+  }
+
   useEffect(() => {
+    closeWebsite()
     getControlStatus()
   }, [])
+
+  const value = {
+    firebaseOpen,
+    openFirebase,
+    closeFirebase,
+    toggleFirebase,
+    closeWebsiteRef
+  }
 
   return (
     <ControlContext.Provider value={value}>

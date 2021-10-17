@@ -24,6 +24,7 @@ import Verify from './page/Verify'
 import VerifyConcert from './page/VerifyConcert'
 import { ControlProvider } from './contexts/ControlContext'
 import PlatformControl from './page/PlatformControl'
+import UhOh from './page/UhOh'
 
 function App() {
 
@@ -31,13 +32,13 @@ function App() {
     <div>
       <Router>
         <AuthProvider>
+          <ControlProvider>
 
-          <MyNav />
-          <MySubNav />
-          <div id="mask"></div>
+            <MyNav />
+            <MySubNav />
+            <div id="mask"></div>
 
-          <Container style={{ minHeight: 'calc(100vh - 230px)' }}>
-            <ControlProvider>
+            <Container style={{ minHeight: 'calc(100vh - 230px)' }}>
               <Switch>
                 <Route path="/" exact> <HomePage /> </Route>
                 <Route path="/wind*"><Wind /></Route>
@@ -52,11 +53,12 @@ function App() {
                 {/* <Route path="/platform-verify"><PlatformVerify /></Route> */}
                 <Route path="/platform-verify-concert"><PlatformConcertVerify /></Route>
                 <Route path="/platform-control"><PlatformControl /></Route>
+                <Route path="/uh-oh"><UhOh /></Route>
                 <Route path="/*"><NotFound /></Route>
               </Switch>
-            </ControlProvider>
-          </Container>
-          <footer> COPYRIGHT © 2021 LR Perussion</footer>
+            </Container>
+            <footer> COPYRIGHT © 2021 LR Perussion</footer>
+          </ControlProvider>
         </AuthProvider>
       </Router>
     </div>

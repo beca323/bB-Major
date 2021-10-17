@@ -21,3 +21,4 @@ export function notnulls(array) {
     return true
   }
 }
+
