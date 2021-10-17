@@ -1,0 +1,25 @@
+.switch-default {
+  background-color: lightgray;
+  height: 30px;
+  width: 60px;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+}
+
+.switch-default div {
+  background-color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  margin: 2px;
+  position: absolute;
+}
+
+.switch-on {
+  background-color: #77aa77;
+}
+
+.switch-on div {
+  right: 0;
+}
